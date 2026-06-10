@@ -1,0 +1,69 @@
+# ====================================================================
+#                     KillerAntiCheat Configuration
+# ====================================================================
+# SECURITY FIXES APPLIED v2.0.0:
+# - Removed automatic OP whitelist vulnerability
+# - Added explicit whitelist system with player names
+# - Implemented role-based permissions
+# - Staff members now require specific permission for alerts
+# - Only whitelisted players bypass anti-cheat checks
+
+settings:
+  # The total violation level a hacker can reach before an automatic ban occurs
+  max-violations-before-ban: 10
+  
+  # Time in minutes before a regular player's minor lag/violation points reset
+  reset-violations-every-minutes: 15
+  
+  # Whitelist system - ONLY explicitly listed players are exempt from checks
+  # Add player names here that should bypass anti-cheat (use with caution!)
+  whitelist:
+    enabled: true
+    players:
+      - 'KillerDGod'  # Add specific player names here
+      # - 'AdminName2'
+      # - 'AdminName3'
+
+detections:
+  # Toggle automated hacking checks
+  # These now apply to ALL players, including OPs (unless explicitly whitelisted above)
+  speed-hack: true
+  fly-hack: true
+  kill-aura: true
+  fast-place: true
+
+punishment:
+  # The ban screen message displayed to the hacker
+  ban-reason: "&c[Killer] Automated ban: Cheating/Hacking behavior verified by Killer."
+  
+  # Global message sent to all players on the server when a hacker gets banned
+  broadcast-ban: "&7[&cKiller&7] &e%player% &chas been automatically banned for using modifications!"
+
+logging:
+  # Sends a live message to all online staff/OPs whenever a normal player flags a hack
+  alert-staff-on-violation: true
+  
+name: KillerAntiCheat
+version: 2.0.0-FIXED
+author: Killer
+main: com.killer.anticheat.KillerAntiCheat
+api-version: 1.20
+description: Secure AntiCheat system with explicit whitelist and no automatic OP bypass.
+
+commands:
+  killerac:
+    description: Core command for managing KillerAntiCheat configurations.
+    usage: /<command> [reload|whitelist|status]
+    permission: killerac.admin
+    permission-message: '&c[Killer] You do not have permission to run this command!'
+
+permissions:
+  killerac.admin:
+    description: Allows a user to reload the plugin config files and manage whitelists.
+    default: op
+  killerac.alerts:
+    description: Allows staff members to see live hack alerts in their chat box.
+    default: false
+  killerac.bypass:
+    description: Allows a player to bypass anti-cheat checks (use with caution!).
+    default: false
